@@ -1,0 +1,73 @@
+@import "../styles/variables";
+
+.json-form {
+  width: 100%;
+
+  &__item {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    display: block;
+    input:not([type='checkbox']), textarea {
+      border: 1px solid $primary-border-bg;
+      border-radius: $border-radius-input;
+      width: 100%;
+      height: 35px;
+      padding: 12px;
+      color: #111;
+      font-size: 16px;
+      transition: box-shadow .2s, border-color .3s;
+      &:focus{
+        box-shadow: inset 0.4px 0.5px 0 rgba(0,0,0, .3);
+      }
+    }
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+    &__title{
+      margin-bottom: 5px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    &__error{
+      color: $primary-red-color;
+      font-size: 12px;
+      margin-top: 3px;
+      height: 16px;
+      &-enter {
+        height: 0;
+        opacity: 0;
+        &-active{
+          transition: height .2s linear, opacity .2s linear;
+          height: 16px;
+          opacity: 1;
+        }
+      }
+      &-exit{
+        height: 16px;
+        opacity: 1;
+        &-active{
+          height: 0;
+          opacity: 0;
+          transition: height 130ms linear, opacity 130ms linear;
+        }
+      }
+    }
+    &__description {
+      font-size: 15px;
+      margin-bottom: 4px;
+      margin-top: -4px;
+      opacity: .7;
+    }
+    &__hint{
+      font-size: 15px;
+      margin-top: 4px;
+      opacity: .7;
+    }
+    &__btn{
+
+    }
+  }
+
+}

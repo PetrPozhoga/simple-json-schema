@@ -1,0 +1,42 @@
+{
+  "title": "A registration form",
+  "description": "A simple form example.",
+  "type": "object",
+  "required": [
+    "firstName",
+    "lastName",
+    "termsOfUse"
+  ],
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "title": "First name",
+      "value": "Chuck",
+      "autoFocus": true
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Last name"
+    },
+    "age": {
+      "type": "integer",
+      "title": "Age",
+      "description": "(earthian year)"
+    },
+    "bio": {
+      "type": "string",
+      "title": "Bio",
+      "isTextarea": true
+    },
+    "password": {
+      "type": "password",
+      "title": "Password",
+      "minLength": 3,
+      "hint": "Hint: Make it strong!"
+    },
+    "termsOfUse": {
+      "type": "checkbox",
+      "title": "You agree terms of use"
+    }
+  }
+}
