@@ -48,7 +48,11 @@ class App extends React.Component {
       let currentProperty = properties[ propertyName ]
       let errorMessage = 'Field ' + currentProperty.title + ' is required'
       if (currentProperty.value && (currentProperty.value.length || typeof currentProperty.value === "boolean"))
-        properties[ propertyName ] = { ...currentProperty, errorMessage: '' }
+        properties[ propertyName ] = {
+          ...currentProperty,
+          errorMessage: currentProperty.errorMessage === errorMessage ? '' : currentProperty.errorMessage
+        }
+
       else {
         console.log(errorMessage)
         properties[ propertyName ] = { ...currentProperty, errorMessage }

@@ -5,7 +5,8 @@
   "required": [
     "firstName",
     "lastName",
-    "termsOfUse"
+    "termsOfUse",
+    "password"
   ],
   "properties": {
     "firstName": {
@@ -36,6 +37,7 @@
     },
     "termsOfUse": {
       "type": "checkbox",
+      "value": true,
       "title": "You agree terms of use"
     }
   }

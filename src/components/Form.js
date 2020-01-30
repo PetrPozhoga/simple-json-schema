@@ -10,6 +10,7 @@ function Form({ properties, changeFields, required, sendForm }) {
 
         let currentProperty = properties[ key ]
         const { value, type, autoFocus, description, isTextarea, hint, errorMessage } = currentProperty
+
         const fieldOption = {
           name: key,
           onChange: changeFields,
@@ -22,6 +23,11 @@ function Form({ properties, changeFields, required, sendForm }) {
             border: '1px solid',
             borderColor: errorMessage && errorMessage.length ? '#a94442' : '#ccc'
           }
+        }
+
+        if (type === 'checkbox') {
+          fieldOption.checked = fieldOption.value
+          delete fieldOption.value
         }
 
         return (
