@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { hot } from 'react-hot-loader/root'
 import { asyncGetSchema } from "./requests"
 import Form from "./components/Form"
+import './favicon.ico'
 import './App.scss'
 
 function App() {
@@ -107,4 +109,4 @@ function App() {
   )
 }
 
-export default App
+export default hot(App)
