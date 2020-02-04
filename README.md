@@ -17,7 +17,7 @@ import React from "react"
 import jsonSchema from "./schema.json" // Your custom json schema
 
 import "react-simple-json-schema-form/build/styles.css"
-import { JsonParadiseSchema } from "react-simple-json-schema-form"
+import JsonParadiseSchema from "react-simple-json-schema-form"
 
 function App() {
   
