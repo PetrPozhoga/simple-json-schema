@@ -18,10 +18,11 @@ function JsonParadiseSchema({ schema, onSubmit }) {
   }, [ schema ])
 
   const changeFields = (event) => {
-    let currentProperty = JSON.parse(JSON.stringify(properties[ event.target.name ]))
+    let propertiesCopy = JSON.parse(JSON.stringify(properties))
+    let currentProperty = propertiesCopy[ event.target.name ]
     currentProperty.value = properties[ event.target.name ].type === 'integer' ?
       event.target.value.replace(/\D/, '') : event.target.type === 'checkbox' ? event.target.checked : event.target.value
-    let propertiesCopy = { ...properties, [ event.target.name ]: currentProperty }
+    propertiesCopy[ event.target.name ] = currentProperty
     setProperties(propertiesCopy)
     if (isSend) fieldValidation(propertiesCopy)
   }
