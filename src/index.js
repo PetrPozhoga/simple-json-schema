@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import JsonParadiseSchema from './JsonParadiseSchema'
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<JsonParadiseSchema/>, document.getElementById('root'));

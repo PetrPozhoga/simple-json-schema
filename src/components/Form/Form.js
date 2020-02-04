@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 import './Form.scss'
 
-function Form({ properties, changeFields, required, sendForm }) {
+function Form({ properties, changeFields, required = [], sendForm, submitValue = 'submit' }) {
   return (
     <form className='json-form' onSubmit={ sendForm }>
       { Object.keys(properties).map((key, index) => {
@@ -13,6 +13,7 @@ function Form({ properties, changeFields, required, sendForm }) {
 
         const fieldOption = {
           name: key,
+          id: 'json-simple-form' + key,
           onChange: changeFields,
           readOnly: true,
           onFocus: e => e.target.removeAttribute('readOnly'),
@@ -31,19 +32,20 @@ function Form({ properties, changeFields, required, sendForm }) {
         }
 
         return (
-          <label htmlFor="" key={ index } className='json-form__item'>
-            <div className='json-form__item__title'>
-              { properties[ key ].title } { required.some(item => item === key) ? '*' : null }
-            </div>
+          <label htmlFor='' key={ index } className='json-form__item'>
+            <label htmlFor={ 'json-simple-form' + key } className='json-form__item__title'>
+              { properties[ key ].title }
+              { required.some(item => item === key) ? '*' : null }
+            </label>
             { description && description.length ?
               <div className='json-form__item__description'>{ description }</div> : null }
             { isTextarea ? <textarea { ...fieldOption }/> : <input { ...fieldOption }/> }
             <CSSTransition
               in={ !!errorMessage && errorMessage.length > 0 }
-              timeout={{
+              timeout={ {
                 enter: 200,
                 exit: 130
-              }}
+              } }
               classNames="json-form__item__error"
               unmountOnExit
               mountOnEnter
@@ -54,14 +56,29 @@ function Form({ properties, changeFields, required, sendForm }) {
           </label>
         )
       }) }
-      <input type="submit" value="Submit" className='json-form__btn primary-btn'/>
+      <input type="submit" value={ submitValue } className='json-form__btn primary-btn'/>
     </form>
   )
 }
 
 Form.propTypes = {
-  properties: PropTypes.object.isRequired,
-  required: PropTypes.array.isRequired,
+  properties: PropTypes.objectOf(PropTypes.object).isRequired,
+  submitValue: PropTypes.string.isRequired,
+  required: ({ required }) => {
+    if (typeof required !== 'undefined' && !Array.isArray(required)) return new
+    Error("Invalid prop `required` of type `" + typeof required + "` supplied to `E`, expected `array`.")
+    else if (Array.isArray(required) && !!required.length) {
+      let errorArr = []
+
+      required.forEach((item, index) => {
+        if (typeof item !== 'string') errorArr.push(index)
+      })
+
+      if (!!errorArr.length) return new
+      Error("Invalid prop `required[" + errorArr[ 0 ] + "]` of type `" + typeof errorArr[ 0 ] +
+        "` supplied to `E`, expected `string`.")
+    }
+  },
   changeFields: PropTypes.func.isRequired,
 }
 

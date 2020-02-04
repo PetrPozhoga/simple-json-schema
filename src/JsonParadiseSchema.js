@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { hot } from 'react-hot-loader/root'
-import { asyncGetSchema } from "./requests"
-import Form from "./components/Form"
-import './favicon.ico'
-import './App.scss'
+import PropTypes from 'prop-types'
+import './JsonParadiseSchema.scss'
+import Form from "./components/Form/Form"
 
-function App() {
+function JsonParadiseSchema({ schema, onSubmit }) {
 
   const [ isSend, setIsSend ] = useState(false)
   const [ title, setTitle ] = useState('')
   const [ description, setDescription ] = useState('')
   const [ required, setRequired ] = useState([])
   const [ properties, setProperties ] = useState({})
+  const [ submitValue, setSubmitValue ] = useState('')
   const [ initialState, setInitialState ] = useState({})
+
+  useEffect(() => {
+    setSchema()
+  }, [ schema ])
 
   const changeFields = (event) => {
     let currentProperty = JSON.parse(JSON.stringify(properties[ event.target.name ]))
@@ -23,22 +26,27 @@ function App() {
     if (isSend) fieldValidation(propertiesCopy)
   }
 
-  const getSchema = async () => {
+  const setSchema = () => {
     try {
-      let res = await asyncGetSchema()
-      if (res.status !== 200 || !res.data) return false
+      let propertiesErrorMessage = 'Failed prop type: The prop `properties` is marked as required in `N`, but its value is not `object`.'
+      if (!Object.keys(schema).length && Object.keys(initialState).length > 0) throw propertiesErrorMessage
+      else if (!Object.keys(schema).length) return
       else {
-        let { title, description, required, properties } = res.data
-        Object.keys(properties).forEach(key => properties[ key ].value = properties[ key ].value || '')
-        let initialState = { title, description, required, properties }
-        setInitialState(initialState)
-        setTitle(title)
-        setDescription(description)
-        setRequired(required)
-        setProperties(properties)
+        let { title, description, required, properties, submitValue } = JSON.parse(JSON.stringify(schema))
+        if (!!properties && Object.keys(properties).length > 0) {
+          Object.keys(properties).forEach(key => properties[ key ].value = properties[ key ].value || '')
+          let initialState = { title, description, required, properties }
+          setInitialState(initialState)
+          setTitle(title)
+          setDescription(description)
+          setRequired(required)
+          setProperties(properties)
+          setSubmitValue(submitValue)
+        }
+        else throw propertiesErrorMessage
       }
     } catch (err) {
-      console.log(err, 'getSchema')
+      throw err
     }
   }
 
@@ -79,34 +87,42 @@ function App() {
 
   const fieldValidation = (properties) => {
     let propertiesCopy = checkRequiredField(properties)
-    return !Object.keys(propertiesCopy).some(item => !!propertiesCopy[item].errorMessage)
+    return !Object.keys(propertiesCopy).some(item => !!propertiesCopy[ item ].errorMessage)
   }
 
   const sendForm = (e) => {
     e.preventDefault()
     setIsSend(true)
     let isValid = fieldValidation(JSON.parse(JSON.stringify(properties)))
+    let copyProperties = JSON.parse(JSON.stringify(properties))
     if (isValid) {
+      let sendParams = {}
+      Object.keys(copyProperties).forEach(item => {
+        delete copyProperties[ item ].errorMessage
+        sendParams[ item ] = copyProperties[ item ].value
+      })
+      onSubmit(sendParams, copyProperties)
       setIsSend(false)
       setProperties(initialState.properties)
     }
   }
 
-  useEffect(() => {
-    getSchema()
-  }, [])
-
   return (
-    <div className="App">
+    <div className="react-simple-json-schema">
       <div className='container'>
-        <h1>{ title }</h1>
-        <h2>{ description }</h2>
-        { properties && required &&
-        <Form changeFields={ changeFields } sendForm={ sendForm }
+        { title ? <h1>{ title }</h1> : null }
+        { description ? <h2>{ description }</h2> : null }
+        { !!Object.keys(properties).length &&
+        <Form changeFields={ changeFields } submitValue={ submitValue } sendForm={ sendForm }
               required={ required } properties={ properties }/> }
       </div>
     </div>
   )
 }
 
-export default hot(App)
+JsonParadiseSchema.propTypes = {
+  schema: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+}
+
+export default JsonParadiseSchema

@@ -1,12 +1,11 @@
 {
   "title": "A registration form",
   "description": "A simple form example.",
-  "type": "object",
   "required": [
     "firstName",
     "lastName",
-    "termsOfUse",
-    "password"
+    "password",
+    "termsOfUse"
   ],
   "properties": {
     "firstName": {
@@ -32,7 +31,7 @@
     "password": {
       "type": "password",
       "title": "Password",
-      "minLength": 3,
+      "minLength": "3",
       "hint": "Hint: Make it strong!"
     },
     "termsOfUse": {
@@ -40,5 +39,6 @@
       "value": true,
       "title": "You agree terms of use"
     }
-  }
+  },
+  "submitValue": "Send"
 }

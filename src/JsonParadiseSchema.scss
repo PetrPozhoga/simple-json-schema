@@ -1,0 +1,53 @@
+@import "styles/variables";
+
+.react-simple-json-schema {
+  padding: 0;
+  line-height: 18px;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    list-style: none;
+  }
+  .container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 0 20px;
+    & > h1 {
+      font-size: 22px;
+      line-height: 18px;
+      margin-bottom: 20px;
+      color: #111;
+      padding-bottom: 10px;
+      border-bottom: 1.2px solid $primary-border-bg;
+    }
+
+    & > h2 {
+      font-size: 18px;
+      line-height: 18px;
+      color: #111;
+      margin-bottom: 15px;
+      font-weight: 400;
+    }
+  }
+  .primary-btn {
+    background: #39A2F1;
+    color: #fff;
+    opacity: .8;
+    display: inline-block;
+    padding: 0 15px;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    &:hover{
+      opacity: 1;
+    }
+  }
+}
