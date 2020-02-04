@@ -89,56 +89,56 @@ export default App;
 
 ### schema - ``` object ``` Required parameter
 
-#### schema.title - ``` string ```
+### schema.title - ``` string ```
 
 h1 heading (optional parameter).
 
-#### schema.description - ``` string ```
+### schema.description - ``` string ```
 
 h2 heading (optional parameter).
 
-#### schema.required - ``` array ``` (of strings)
+### schema.required - ``` array ``` (of strings)
 
 An array containing the names (Object key(s)) of the fields to be filled, otherwise the form will not pass validation.
 This is an optional parameter, ```inside only the string```
 
-#### schema.properties - ``` object ``` (of object(s)) Required parameter
+### schema.properties - ``` object ``` (of object(s)) Required parameter
 
 An object that contains objects (key names are custom) that describe field customization.
 
-#### schema.properties.yourCustomName(firstName).type - ``` string ```
+### schema.properties.yourCustomName(firstName).type - ``` string ```
 
 Input type may equal - ``` string | integer(number) | mail | password | checkbox ```.
 
-#### schema.properties.yourCustomName(firstName).title - ``` string ```
+### schema.properties.yourCustomName(firstName).title - ``` string ```
 
 Title for your field.
 
-#### schema.properties.yourCustomName(firstName).value - ``` string | boolean```
+### schema.properties.yourCustomName(firstName).value - ``` string | boolean```
 
 The contents of your field, type ``` string ```, can be Boolean, if ```properties.yourCustomName(termsOfUse).type = checkbox```.
 
-#### schema.properties.yourCustomName(firstName).autoFocus - ``` boolean ```
+### schema.properties.yourCustomName(firstName).autoFocus - ``` boolean ```
 
 Focuses on the field when loading the schema.
 
-#### schema.properties.yourCustomName(age).description - ``` string ```
+### schema.properties.yourCustomName(age).description - ``` string ```
 
 Descriptions of your field under the heading.
 
-#### schema.properties.yourCustomName(bio).isTextarea - ``` boolean ```
+### schema.properties.yourCustomName(bio).isTextarea - ``` boolean ```
 
 Creates a large textarea ``` instead of Input ``` field for more information.
 
-#### schema.properties.yourCustomName(password).minLength - ``` string ```
+### schema.properties.yourCustomName(password).minLength - ``` string ```
 
 The minimum number of characters to pass validation.
 
-#### schema.properties.yourCustomName(password).hint - ``` string ```
+### schema.properties.yourCustomName(password).hint - ``` string ```
 
 The tooltip that will be under your field.
 
-#### schema.submitValue - ``` string ``` Required parameter
+### schema.submitValue - ``` string ``` Required parameter
 
 The name of your button.
 
