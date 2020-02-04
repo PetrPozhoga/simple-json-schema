@@ -1,5 +1,5 @@
 {
-  "name": "react-simple-jsonschema-form",
+  "name": "react-simple-json-schema-form",
   "version": "0.1.0",
   "main": "build/index.js",
   "engines": {

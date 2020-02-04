@@ -3,11 +3,11 @@ react-simple-jsonschema-form
 
 ## Introductions
 
-react-simple-jsonschema-form a simple react component that builds a HTML form from a json object.
+react-simple-json-schema-form a simple react component that builds a HTML form from a json object.
 
 ## Install
 ```
-npm install --save react-simple-jsonschema-form
+npm install --save react-simple-json-schema-form
 ```
 
 ## Usage
@@ -16,8 +16,8 @@ npm install --save react-simple-jsonschema-form
 import React from 'react'
 import jsonSchema from './schema.json' // Your custom json schema
 
-import 'json-paradise-schema/build/styles.css'
-import JsonParadiseSchema from 'react-simple-json-schema'
+import 'react-simple-json-schema-form/build/styles.css'
+import JsonParadiseSchema from 'react-simple-json-schema-form'
 
 function App() {
   
