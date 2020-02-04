@@ -13,11 +13,11 @@ npm install --save react-simple-json-schema-form
 ## Usage
 
 ```js
-import React from 'react'
-import jsonSchema from './schema.json' // Your custom json schema
+import React from "react"
+import jsonSchema from "./schema.json" // Your custom json schema
 
-import 'react-simple-json-schema-form/build/styles.css'
-import JsonParadiseSchema from 'react-simple-json-schema-form'
+import "react-simple-json-schema-form/build/styles.css"
+import { JsonParadiseSchema } from "react-simple-json-schema-form"
 
 function App() {
   
@@ -31,10 +31,10 @@ function App() {
     <div className="App">
       <JsonParadiseSchema schema={ schema } onSubmit={ send }/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 ## Example Json schema
