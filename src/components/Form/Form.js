@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 import './Form.scss'
 
-function Form({ properties, changeFields, required = [], sendForm, submitValue = 'submit' }) {
+const Form = memo(function Form({ properties, changeFields, required = [], sendForm, submitValue = 'submit' }) {
   return (
     <form className='json-form' onSubmit={ sendForm }>
       { Object.keys(properties).map((key, index) => {
@@ -32,7 +32,7 @@ function Form({ properties, changeFields, required = [], sendForm, submitValue =
         }
 
         return (
-          <label htmlFor='' key={ index } className='json-form__item'>
+          <label htmlFor='' key={ key } className='json-form__item'>
             <label htmlFor={ 'json-simple-form' + key } className='json-form__item__title'>
               { properties[ key ].title }
               { required.some(item => item === key) ? '*' : null }
@@ -59,7 +59,7 @@ function Form({ properties, changeFields, required = [], sendForm, submitValue =
       <input type="submit" value={ submitValue } className='json-form__btn primary-btn'/>
     </form>
   )
-}
+})
 
 Form.propTypes = {
   properties: PropTypes.objectOf(PropTypes.object).isRequired,

@@ -1,112 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import './JsonParadiseSchema.scss'
 import Form from "./components/Form/Form"
+import { useSchema } from './hooks/schema.hook'
+import { useValidation } from './hooks/validation.hook'
+import { useForm } from "./hooks/form.hook"
 
 function JsonParadiseSchema({ schema, onSubmit }) {
 
-  const [ isSend, setIsSend ] = useState(false)
-  const [ title, setTitle ] = useState('')
-  const [ description, setDescription ] = useState('')
-  const [ required, setRequired ] = useState([])
-  const [ properties, setProperties ] = useState({})
-  const [ submitValue, setSubmitValue ] = useState('')
-  const [ initialState, setInitialState ] = useState({})
+  const {
+    title,
+    description,
+    required,
+    properties,
+    setProperties,
+    submitValue,
+    initialState,
+  } = useSchema(schema)
 
-  useEffect(() => {
-    setSchema()
-  }, [ schema ])
-
-  const changeFields = (event) => {
-    let propertiesCopy = JSON.parse(JSON.stringify(properties))
-    let currentProperty = propertiesCopy[ event.target.name ]
-    currentProperty.value = properties[ event.target.name ].type === 'integer' ?
-      event.target.value.replace(/\D/, '') : event.target.type === 'checkbox' ? event.target.checked : event.target.value
-    propertiesCopy[ event.target.name ] = currentProperty
-    setProperties(propertiesCopy)
-    if (isSend) fieldValidation(propertiesCopy)
-  }
-
-  const setSchema = () => {
-    try {
-      let propertiesErrorMessage = 'Failed prop type: The prop `properties` is marked as required in `N`, but its value is not `object`.'
-      if (!Object.keys(schema).length && Object.keys(initialState).length > 0) throw propertiesErrorMessage
-      else if (!Object.keys(schema).length) return
-      else {
-        let { title, description, required, properties, submitValue } = JSON.parse(JSON.stringify(schema))
-        if (!!properties && Object.keys(properties).length > 0) {
-          Object.keys(properties).forEach(key => properties[ key ].value = properties[ key ].value || '')
-          let initialState = { title, description, required, properties }
-          setInitialState(initialState)
-          setTitle(title)
-          setDescription(description)
-          setRequired(required)
-          setProperties(properties)
-          setSubmitValue(submitValue)
-        }
-        else throw propertiesErrorMessage
-      }
-    } catch (err) {
-      throw err
-    }
-  }
-
-  const checkRequiredField = (propertiesCopy) => {
-    required.forEach(propertyName => {
-      let currentProperty = propertiesCopy[ propertyName ]
-      let errorMessage = 'Field ' + currentProperty.title + ' is required'
-      if (currentProperty.value && (currentProperty.value.length || typeof currentProperty.value === "boolean"))
-        propertiesCopy[ propertyName ] = {
-          ...currentProperty,
-          errorMessage: currentProperty.errorMessage === errorMessage ? '' : currentProperty.errorMessage
-        }
-
-      else {
-        propertiesCopy[ propertyName ] = { ...currentProperty, errorMessage }
-      }
-    })
-    setProperties(propertiesCopy)
-    return checkMinLength(propertiesCopy)
-  }
-
-  const checkMinLength = (propertiesCopy) => {
-    Object.keys(propertiesCopy).forEach(propertyName => {
-      let currentProperty = propertiesCopy[ propertyName ]
-      let errorMessage = 'The ' + currentProperty.title + ' field must be at least ' + currentProperty.minLength + ' characters'
-
-      if (currentProperty.minLength) {
-        if (currentProperty.value && currentProperty.value.length >= currentProperty.minLength) propertiesCopy[ propertyName ] = {
-          ...currentProperty,
-          errorMessage: ''
-        }
-        else propertiesCopy[ propertyName ] = { ...currentProperty, errorMessage }
-      }
-    })
-    setProperties(propertiesCopy)
-    return propertiesCopy
-  }
-
-  const fieldValidation = (properties) => {
-    let propertiesCopy = checkRequiredField(properties)
-    return !Object.keys(propertiesCopy).some(item => !!propertiesCopy[ item ].errorMessage)
-  }
-
-  const sendForm = (e) => {
-    e.preventDefault()
-    setIsSend(true)
-    let isValid = fieldValidation(JSON.parse(JSON.stringify(properties)))
-    let copyProperties = JSON.parse(JSON.stringify(properties))
-    if (isValid) {
-      let sendParams = {}
-      Object.keys(copyProperties).forEach(item => {
-        delete copyProperties[ item ].errorMessage
-        sendParams[ item ] = copyProperties[ item ].value
-      })
-      onSubmit(sendParams, copyProperties)
-      setIsSend(false)
-      setProperties(initialState.properties)
-    }
-  }
+  const { fieldValidation } = useValidation({setProperties, required})
+  const { changeFields, sendForm } = useForm({onSubmit, initialState, properties, setProperties, fieldValidation})
 
   return (
     <div className="react-simple-json-schema">

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`describe schema test returned value without properties, setProperties, initialState 1`] = `
+Object {
+  "description": "A simple form example.",
+  "properties": Object {
+    "age": Object {
+      "description": "(earthian year)",
+      "title": "Age",
+      "type": "integer",
+    },
+    "bio": Object {
+      "isTextarea": true,
+      "title": "Bio",
+      "type": "string",
+    },
+    "firstName": Object {
+      "autoFocus": true,
+      "title": "First name",
+      "type": "string",
+      "value": "Chuck",
+    },
+    "lastName": Object {
+      "title": "Last name",
+      "type": "string",
+    },
+    "password": Object {
+      "hint": "Hint: Make it strong!",
+      "minLength": "3",
+      "title": "Password",
+      "type": "password",
+    },
+    "termsOfUse": Object {
+      "title": "You agree terms of use",
+      "type": "checkbox",
+      "value": true,
+    },
+  },
+  "required": Array [
+    "firstName",
+    "lastName",
+    "password",
+    "termsOfUse",
+  ],
+  "submitValue": "Send",
+  "title": "A registration form",
+}
+`;
