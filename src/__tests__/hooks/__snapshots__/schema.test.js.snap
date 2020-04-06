@@ -14,6 +14,10 @@ Object {
       "title": "Bio",
       "type": "string",
     },
+    "confirmPassword": Object {
+      "title": "Confirm password",
+      "type": "confirmPassword",
+    },
     "firstName": Object {
       "autoFocus": true,
       "title": "First name",

@@ -33,6 +33,23 @@ export const useValidation = ({ setProperties, required }) => {
       }
     })
     setProperties(propertiesCopy)
+    return checkConfirmPassword(propertiesCopy)
+  }
+
+  const checkConfirmPassword = (propertiesCopy) => {
+    let propertiesKey = Object.keys(propertiesCopy)
+    let confirmPassword = propertiesKey.find(key => propertiesCopy[key].type === 'confirmPassword')
+    let password = propertiesKey.find(key => propertiesCopy[key].type === 'password')
+    if (!!confirmPassword) {
+      if (propertiesCopy[password].value !== propertiesCopy[confirmPassword].value) {
+        const errorMessage = 'Password and Confirm password do not match'
+        propertiesCopy[password].errorMessage = errorMessage
+        propertiesCopy[confirmPassword].errorMessage = errorMessage
+      }
+      else {
+        if (propertiesCopy[confirmPassword].errorMessage) delete propertiesCopy[confirmPassword].errorMessage
+      }
+    }
     return propertiesCopy
   }
 

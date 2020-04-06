@@ -48,6 +48,36 @@ describe('describe schema error', () => {
     })).toThrow("Failed prop type: The prop `properties` is marked as required in `N`, but its value is not `object`.")
   })
 
+  it('throw if confirmPassword is initially without password', () => {
+    spyOn(console, 'error')
+
+    expect(() => testHook(() => {
+      let schemaCopy = JSON.parse(JSON.stringify(schema))
+      delete schemaCopy.properties.password
+      useSchema(schemaCopy)
+    })).toThrow('Failed prop type: `password` is required if there is a `confirmPassword`')
+  })
+
+  it('confirm password is unique', () => {
+    spyOn(console, 'error')
+
+    expect(() => testHook(() => {
+      let schemaCopy = JSON.parse(JSON.stringify(schema))
+      schemaCopy.properties.password2 = { type: 'confirmPassword' }
+      useSchema(schemaCopy)
+    })).toThrow('Failed prop type: `confirmPassword` is unique')
+  })
+
+  it('throw if confirmPassword is initially with more password', () => {
+    spyOn(console, 'error')
+
+    expect(() => testHook(() => {
+      let schemaCopy = JSON.parse(JSON.stringify(schema))
+      schemaCopy.properties.password1 = { type: 'password' }
+      useSchema(schemaCopy)
+    })).toThrow('Failed prop type: `password` is unique if there is a `confirmPassword`')
+  })
+
   it('return if schema object keys length = 0', () => {
     let schemaObj = {}
 

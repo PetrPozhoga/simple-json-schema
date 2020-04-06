@@ -4,6 +4,14 @@ import { CSSTransition } from 'react-transition-group'
 import './Form.scss'
 
 const Form = memo(function Form({ properties, changeFields, required = [], sendForm, submitValue = 'submit' }) {
+
+  const parseType = type => {
+    const typeList = {
+      confirmPassword: 'password',
+    }
+    return typeList[type] || type
+  }
+
   return (
     <form className='json-form' onSubmit={ sendForm }>
       { Object.keys(properties).map((key, index) => {
@@ -18,7 +26,7 @@ const Form = memo(function Form({ properties, changeFields, required = [], sendF
           readOnly: true,
           onFocus: e => e.target.removeAttribute('readOnly'),
           value,
-          type,
+          type: parseType(type),
           autoFocus,
           style: {
             border: '1px solid',

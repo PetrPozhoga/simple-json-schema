@@ -28,6 +28,10 @@
       "title": "Bio",
       "isTextarea": true
     },
+    "confirmPassword": {
+      "type": "confirmPassword",
+      "title": "Confirm password"
+    },
     "password": {
       "type": "password",
       "title": "Password",
