@@ -1,6 +1,8 @@
 react-simple-jsonschema-form
 ============================
 
+#### UPDATE 0.1.6 new type confirmPassword
+
 ## Introductions
 
 react-simple-json-schema-form a simple react component that builds a HTML form from a json object.
@@ -76,6 +78,10 @@ export default App
       "minLength": "3",
       "hint": "Hint: Make it strong!"
     },
+    "confirmPassword": {
+      "type": "confirmPassword",
+      "title": "Confirm password",
+    },
     "termsOfUse": {
       "type": "checkbox",
       "value": true,
@@ -108,7 +114,7 @@ An object that contains objects (key names are custom) that describe field custo
 
 ### schema.properties.yourCustomName(firstName).type - ``` string ```
 
-Input type may equal - ``` string | integer(number) | mail | password | checkbox ```.
+Input type may equal - ``` string | integer(number) | mail | password | checkbox | confirmPassword (unique) ```.
 
 ### schema.properties.yourCustomName(firstName).title - ``` string ```
 
